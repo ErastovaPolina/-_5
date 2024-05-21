@@ -1,0 +1,274 @@
+#Task1
+
+def is_valid_password(password):
+    # Проверка длины пароля
+    if len(password) <= 8:
+        return False
+
+    has_lowercase = any(c.islower() for c in password)
+    has_uppercase = any(c.isupper() for c in password)
+    has_digit = any(c.isdigit() for c in password)
+    keyboard_layout = {"qwertyuiop", "йцукенгшщзхъ", "asdfghjkl", "фывапролджэ", "zxcvbnm", "ячсмитьбю"}
+    has_consecutive_letters = any(password[i:i+3].lower() in keyboard_layout for i in range(len(password) - 2))
+
+    # Проверка наличия хотя бы одной цифры
+    if not has_digit:
+        return False
+
+    # Проверка наличия комбинаций из трех рядом стоящих символов на клавиатуре
+    if has_consecutive_letters:
+        return False
+
+    # Проверка наличия больших и маленьких букв
+    if not (has_lowercase and has_uppercase):
+        return False
+
+    return True
+
+def main():
+    password = input("Введите пароль: ")
+    if is_valid_password(password):
+        print("ok")
+    else:
+        print("error")
+
+if __name__ == "__main__":
+    main()
+
+#Task2
+
+class PasswordError(Exception):
+    pass
+
+class LengthError(PasswordError):
+    pass
+
+class LetterError(PasswordError):
+    pass
+
+class DigitError(PasswordError):
+    pass
+
+class SequenceError(PasswordError):
+    pass
+
+def check_password(password):
+    # Проверка длины пароля
+    if len(password) < 9:
+        raise LengthError("Длина пароля должна быть не менее 9 символов.")
+
+    has_lowercase = any(c.islower() for c in password)
+    has_uppercase = any(c.isupper() for c in password)
+    has_digit = any(c.isdigit() for c in password)
+    keyboard_layout = ["qwertyuiop", "йцукенгшщзхъ", "asdfghjkl", "фывапролджэ", "zxcvbnm", "ячсмитьбю"]
+
+    # Проверка наличия хотя бы одной цифры
+    if not has_digit:
+        raise DigitError("Пароль должен содержать хотя бы одну цифру.")
+
+    # Проверка наличия комбинаций из трех рядом стоящих символов на клавиатуре
+    for i in range(len(password) - 2):
+        if any(password[i:i+3].lower() in row for row in keyboard_layout):
+            raise SequenceError("Пароль содержит недопустимую комбинацию из трех рядом стоящих символов.")
+
+    # Проверка наличия больших и маленьких букв
+    if not (has_lowercase and has_uppercase):
+        raise LetterError("Пароль должен содержать символы разных регистров.")
+
+    return "ok"
+
+def main():
+    password = input("Введите пароль: ")
+    try:
+        result = check_password(password)
+        print(result)
+    except PasswordError as e:
+        print("error:", e)
+
+if __name__ == "__main__":
+    main()
+
+#Task3
+
+class PasswordError(Exception):
+    pass
+
+class LengthError(PasswordError):
+    pass
+
+class LetterError(PasswordError):
+    pass
+
+class DigitError(PasswordError):
+    pass
+
+class SequenceError(PasswordError):
+    pass
+
+def check_password(password):
+    # Проверка длины пароля
+    assert len(password) >= 9, "Длина пароля должна быть не менее 9 символов."
+
+    has_lowercase = any(c.islower() for c in password)
+    has_uppercase = any(c.isupper() for c in password)
+    has_digit = any(c.isdigit() for c in password)
+    keyboard_layout = ["qwertyuiop", "йцукенгшщзхъ", "asdfghjkl", "фывапролджэ", "zxcvbnm", "ячсмитьбю"]
+
+    # Проверка наличия хотя бы одной цифры
+    assert has_digit, "Пароль должен содержать хотя бы одну цифру."
+
+    # Проверка наличия комбинаций из трех рядом стоящих символов на клавиатуре
+    for i in range(len(password) - 2):
+        assert not any(password[i:i+3].lower() in row for row in keyboard_layout), "Пароль содержит недопустимую комбинацию из трех рядом стоящих символов."
+
+    # Проверка наличия больших и маленьких букв
+    assert has_lowercase and has_uppercase, "Пароль должен содержать символы разных регистров."
+
+    return "ok"
+
+def main():
+    password = input("Введите пароль: ")
+    try:
+        result = check_password(password)
+        print(result)
+    except AssertionError as e:
+        print("error:", e)
+    except Exception as e:
+        print("error:", e)
+
+if __name__ == "__main__":
+    main()
+
+#Task4
+
+class PasswordError(Exception):
+    pass
+
+
+class LengthError(PasswordError):
+    pass
+
+
+class LetterError(PasswordError):
+    pass
+
+
+class DigitError(PasswordError):
+    pass
+
+
+class SequenceError(PasswordError):
+    pass
+
+
+def check_password(password):
+    assert len(password) >= 9, "Длина пароля должна быть не менее 9 символов."
+
+    has_lowercase = any(c.islower() for c in password)
+    has_uppercase = any(c.isupper() for c in password)
+    has_digit = any(c.isdigit() for c in password)
+    keyboard_layout = ["qwertyuiop", "йцукенгшщзхъ", "asdfghjkl", "фывапролджэ", "zxcvbnm", "ячсмитьбю"]
+
+    # Проверка наличия хотя бы одной цифры
+    assert has_digit, "Пароль должен содержать хотя бы одну цифру."
+
+    # Проверка наличия комбинаций из трех рядом стоящих символов
+    for i in range(len(password) - 2):
+        assert not any(password[i:i + 3].lower() in row for row in
+                       keyboard_layout), "Пароль содержит недопустимую комбинацию из трех рядом стоящих символов."
+
+    # Проверка наличия больших и маленьких букв
+    assert has_lowercase and has_uppercase, "Пароль должен содержать символы разных регистров."
+
+    return "ok"
+
+
+def main():
+    while True:
+        password = input("Введите пароль: ")
+        try:
+            if password.lower() == "ctrl+break":
+                raise KeyboardInterrupt
+
+            result = check_password(password)
+            print(result)
+            break 
+        except AssertionError as e:
+            print("error:", e)
+        except Exception as e:
+            print("error:", e)
+        except KeyboardInterrupt:  # Обработка прерывания с клавиатуры (Ctrl+C)
+            print("\nBye-Bye")
+            break 
+
+
+if __name__ == "__main__":
+    main()
+
+#Task5
+
+class DefaultList(list):
+    def __init__(self, default_value):
+        self.default_value = default_value
+        super().__init__()
+
+    def __getitem__(self, index):
+        try:
+            return super().__getitem__(index)
+        except IndexError:
+            return self.default_value
+
+class PasswordError(Exception):
+    pass
+
+class LengthError(PasswordError):
+    pass
+
+class LetterError(PasswordError):
+    pass
+
+class DigitError(PasswordError):
+    pass
+
+class SequenceError(PasswordError):
+    pass
+
+def check_password(password):
+    assert len(password) >= 9, "Длина пароля должна быть не менее 9 символов."
+    has_lowercase = any(c.islower() for c in password)
+    has_uppercase = any(c.isupper() for c in password)
+    has_digit = any(c.isdigit() for c in password)
+    keyboard_layout = ["qwertyuiop", "йцукенгшщзхъ", "asdfghjkl", "фывапролджэ", "zxcvbnm", "ячсмитьбю",
+                       "poiuytrewq", "ъхзщшгнекуцй", "lkjhgfdsa", "эждлорпавыф", "mnbvcxz", "юбьтимсчя"]
+
+    # Проверка наличия хотя бы одной цифры
+    assert has_digit, "Пароль должен содержать хотя бы одну цифру."
+
+    # Проверка наличия комбинаций из трех рядом стоящих символов
+    for i in range(len(password) - 2):
+        assert not any(password[i:i + 3].lower() in row for row in keyboard_layout), "Пароль содержит недопустимую комбинацию из трех рядом стоящих символов."
+
+    # Проверка наличия больших и маленьких букв
+    assert has_lowercase and has_uppercase, "Пароль должен содержать символы разных регистров."
+
+    return "ok"
+
+def main():
+    while True:
+        password = input("Введите пароль: ")
+        try:
+            if password.lower() == "ctrl+break":
+                raise KeyboardInterrupt
+            result = check_password(password)
+            print(result)
+            break
+        except AssertionError as e:
+            print("error:", e)
+        except Exception as e:
+            print("error:", e)
+        except KeyboardInterrupt:  # Обработка прерывания с клавиатуры (Ctrl+C)
+            print("\nBye-Bye")
+            break
+
+if __name__ == "__main__":
+    main()
